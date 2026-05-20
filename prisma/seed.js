@@ -9,7 +9,8 @@ const movies = [
     releaseYear: 1999,
     genres: ["Action", "Sci-Fi"],
     runtime: 136,
-    posterUrl: "https://example.com/matrix.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/f89SVexWwY7gUIwZpBv3vJuVwPZ.jpg",
     createdBy: userId,
   },
   {
@@ -19,7 +20,8 @@ const movies = [
     releaseYear: 2010,
     genres: ["Action", "Sci-Fi", "Thriller"],
     runtime: 148,
-    posterUrl: "https://example.com/inception.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/l94w3J0wI89gA61ohpqZ67vjo1w.jpg",
     createdBy: userId,
   },
   {
@@ -28,7 +30,8 @@ const movies = [
     releaseYear: 2008,
     genres: ["Action", "Crime", "Drama"],
     runtime: 152,
-    posterUrl: "https://example.com/darkknight.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/qJ2tWw7B66m37w0g43ZJFpZPn1V.jpg",
     createdBy: userId,
   },
   {
@@ -37,7 +40,8 @@ const movies = [
     releaseYear: 1994,
     genres: ["Crime", "Drama"],
     runtime: 154,
-    posterUrl: "https://example.com/pulpfiction.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/d5iIlFn5s0Imsg6j37wU7qIEmOx.jpg",
     createdBy: userId,
   },
   {
@@ -46,7 +50,8 @@ const movies = [
     releaseYear: 2014,
     genres: ["Adventure", "Drama", "Sci-Fi"],
     runtime: 169,
-    posterUrl: "https://example.com/interstellar.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/gEU2QG0wOhvYvkgvHG7zSGAw96B.jpg",
     createdBy: userId,
   },
   {
@@ -55,7 +60,8 @@ const movies = [
     releaseYear: 1994,
     genres: ["Drama"],
     runtime: 142,
-    posterUrl: "https://example.com/shawshank.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/9cqN00Gmq7hg7g68g70N86f6wFZ.jpg",
     createdBy: userId,
   },
   {
@@ -65,7 +71,8 @@ const movies = [
     releaseYear: 1999,
     genres: ["Drama"],
     runtime: 139,
-    posterUrl: "https://example.com/fightclub.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ42g9wYm2i.jpg",
     createdBy: userId,
   },
   {
@@ -75,7 +82,8 @@ const movies = [
     releaseYear: 1994,
     genres: ["Drama", "Romance"],
     runtime: 142,
-    posterUrl: "https://example.com/forrestgump.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/arw27Yw86vLO76YTRwZ6AwwHBwP.jpg",
     createdBy: userId,
   },
   {
@@ -85,7 +93,8 @@ const movies = [
     releaseYear: 1972,
     genres: ["Crime", "Drama"],
     runtime: 175,
-    posterUrl: "https://example.com/godfather.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/3bhkrj5UGgHueQa0gHp2gZg6wZ0.jpg",
     createdBy: userId,
   },
   {
@@ -94,22 +103,24 @@ const movies = [
     releaseYear: 1990,
     genres: ["Biography", "Crime", "Drama"],
     runtime: 146,
-    posterUrl: "https://example.com/goodfellas.jpg",
+    posterUrl:
+      "https://image.tmdb.org/t/p/w500/aKuFiU82gXwUiY0XwYwXmIYg83v.jpg",
     createdBy: userId,
   },
 ];
 
 const main = async () => {
-  console.log("Seeding movies...");
+  console.log("Seeding movies with high-quality posters...");
+  // Clear existing items if you want a clean slate
+  await prisma.movie.deleteMany({});
 
   for (const movie of movies) {
     await prisma.movie.create({
       data: movie,
     });
-    console.log(`created movie ${movie.title}`);
+    console.log(`Created movie: ${movie.title}`);
   }
-
-  console.log("Seeding completed...");
+  console.log("Seeding completed successfully!");
 };
 
 main()
