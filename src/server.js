@@ -11,6 +11,15 @@ connectDB();
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow your Next.js frontend origin
+    credentials: true, // Allow cookies/authorization headers to pass through
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
 // body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
