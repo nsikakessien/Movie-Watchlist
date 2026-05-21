@@ -8,9 +8,6 @@ import { connectDB } from "./config/db.js";
 
 const app = express();
 
-// Connect DB
-connectDB();
-
 app.use(
   cors({
     origin: [
@@ -24,6 +21,19 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ✅ FIXED: Lazily connect to the database per request instead of globally blocking file imports
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error("Database lazy-connection middleware failure:", error);
+    res
+      .status(500)
+      .json({ success: false, error: "Database connection failed" });
+  }
+});
+
 // Root route
 app.get("/", (req, res) => {
   res.send("API is running...");
@@ -33,5 +43,13 @@ app.get("/", (req, res) => {
 app.use("/api/movies", movieRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/watchlist", watchlistRoutes);
+
+// ✅ Add local server support so you can still run `node server.js` or `nodemon` locally
+if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => {
+    console.log(`Server is running locally on port ${PORT}`);
+  });
+}
 
 export default app;
