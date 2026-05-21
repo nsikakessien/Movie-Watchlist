@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { connectDB, disconnectDB } from "./config/db.js";
 
 // import routes
@@ -28,9 +29,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API routes
-app.use("/movies", movieRoutes);
-app.use("/auth", authRoutes);
-app.use("/watchlist", watchlistRoutes);
+app.use("/api/movies", movieRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/watchlist", watchlistRoutes);
 
 const PORT = 5001;
 
