@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 
-import movieRoutes from "../src/routes/movieRoutes.js";
-import authRoutes from "../src/routes/authRoutes.js";
-import watchlistRoutes from "../src/routes/watchlistRoutes.js";
-import { connectDB } from "../src/config/db.js";
+import movieRoutes from "./routes/movieRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import watchlistRoutes from "./routes/watchlistRoutes.js";
+import { connectDB } from "./config/db.js";
 
 const app = express();
 
