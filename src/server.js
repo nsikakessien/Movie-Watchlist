@@ -11,6 +11,18 @@ connectDB();
 
 const app = express();
 
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://movie-watchlist-seven-puce.vercel.app",
+    ],
+    credentials: true, // Essential for transferring the 'jwt' cookie
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
 // body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
