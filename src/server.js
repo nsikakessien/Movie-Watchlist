@@ -19,7 +19,7 @@ app.use(
       "https://movie-watchlist-seven-puce.vercel.app",
     ],
     credentials: true, // Essential for transferring the 'jwt' cookie
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
@@ -33,48 +33,24 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/watchlist", watchlistRoutes);
 
-const PORT = 5001;
-
-// Capture the server instance so your graceful shutdowns actually work
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// ✅ FIXED: Only invoke listen if we are NOT on Vercel serverless platform
+if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+  const PORT = 5001;
+  app.listen(PORT, () => {
+    console.log(`Server is running locally on port ${PORT}`);
+  });
+}
 
 // Handle unhandled promise rejections and uncaught exceptions
 process.on("unhandledRejection", (error) => {
   console.error("Unhandled Rejection:", error);
-  if (server) {
-    server.close(async () => {
-      await disconnectDB();
-      process.exit(1);
-    });
-  } else {
-    process.exit(1);
-  }
+  process.exit(1);
 });
 
 process.on("uncaughtException", (error) => {
   console.error("Uncaught Exception:", error);
-  if (server) {
-    server.close(async () => {
-      await disconnectDB();
-      process.exit(1);
-    });
-  } else {
-    process.exit(1);
-  }
+  process.exit(1);
 });
 
-process.on("SIGTERM", async () => {
-  console.log("SIGTERM received. Shutting down gracefully...");
-  if (server) {
-    server.close(async () => {
-      await disconnectDB();
-      process.exit(0);
-    });
-  } else {
-    process.exit(0);
-  }
-});
-
+// Always export the app instance so Vercel can convert it into a serverless handler
 export default app;
