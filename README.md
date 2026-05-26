@@ -1,4 +1,4 @@
-# MOVIE WATCHLIST
+# CINE TRACK BACKEND
 
 A simple Express + Prisma backend for managing users, movies, and personal watchlists. It includes authentication, movie browsing, and a protected watchlist API.
 
